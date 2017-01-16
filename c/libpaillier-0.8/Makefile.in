@@ -1,0 +1,74 @@
+top_srcdir = @top_srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+libdir = @libdir@
+includedir = @includedir@
+
+CC = @CC@
+CFLAGS  = @CFLAGS@ @GMP_CFLAGS@ @DEFS@
+LDFLAGS = @LDFLAGS@ @GMP_LIBS@ @LIBS@
+
+DISTNAME = @PACKAGE_TARNAME@-@PACKAGE_VERSION@
+
+all: libpaillier.a TAGS
+
+# compilation and library making
+
+libpaillier.a: paillier.o
+	rm -f $@
+	ar rc $@ $<
+
+test: test.o libpaillier.a
+	$(CC) -o $@ $(LDFLAGS) $^
+
+perf: perf.o libpaillier.a
+	$(CC) -o $@ $(LDFLAGS) $^
+
+%.o: %.c *.h Makefile
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+# installation
+
+dist: AUTHORS COPYING INSTALL Makefile.in NEWS README aclocal.m4 \
+	paillier.c paillier.h configure configure.ac install-sh m4 missing mkinstalldirs
+	rm -rf $(DISTNAME)
+	mkdir $(DISTNAME)
+	cp -r $^ $(DISTNAME)
+	rm -rf $(DISTNAME)/m4/.svn $(DISTNAME)/m4/*~
+	tar zc $(DISTNAME) > $(DISTNAME).tar.gz
+	rm -rf $(DISTNAME)
+
+install: libpaillier.a paillier.h
+	$(top_srcdir)/mkinstalldirs -m 755 $(libdir)
+	$(top_srcdir)/mkinstalldirs -m 755 $(includedir)
+	$(top_srcdir)/install-sh -m 755 libpaillier.a $(libdir)
+	$(top_srcdir)/install-sh -m 644 paillier.h $(includedir)
+
+uninstall:
+	/bin/rm -f $(libdir)/libpaillier.a
+	/bin/rm -f $(includedir)/paillier.h
+
+# development and meta stuff
+
+TAGS: *.c *.h
+	@(etags $^ || true) 2> /dev/null
+
+Makefile: Makefile.in config.status
+	./config.status
+
+config.status: configure
+	./config.status --recheck
+
+configure: configure.ac aclocal.m4
+	autoconf
+
+# cleanup
+
+# remove everything an installing user can rebuild
+clean:
+	rm -rf *.o *.a perf $(DISTNAME) *.tar.gz TAGS *~
+
+# remove everything a package developer can rebuild
+distclean: clean
+	rm -rf autom4te.cache Makefile config.status config.log config.cache \
+		configure configure.scan autoscan.log

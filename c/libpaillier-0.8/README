@@ -1,0 +1,75 @@
+For the most up to date version and information about this library,
+visit
+
+  http://acsc.csl.sri.com/libpaillier
+
+Paillier [1] is a public key cryptosystem which offers an additive
+homomorphism, making it very useful for privacy preserving
+applications. This is a simple C library which implements Paillier key
+generation, encryption, decryption, and also makes it easy to use the
+homomorphism.
+
+The excellent GNU Multiple Precision Arithmetic Library (GMP) is used
+for the underlying number theoretic operations, so you will need to
+have that installed before building libpaillier.
+
+Generally, the library is written in the most straightforward manner
+that you may imagine given that it is written in C and uses GMP. The
+Paillier cryptosystem is not very complicated, and neither is
+libpaillier.
+
+Right now, the only documentation available is the series of comments
+in the header file (paillier.h). That is probably all that is
+necessary, however, given the simplicity of the library.
+
+There are couple security considerations to keep in mind if you intend
+to try to actually do something secure with libpaillier. Which you
+absolutely shouldn't do anyway, since there are probably other issues
+I'm overlooking.
+
+When the paillier_keygen function selects a modulus n = p q, it does
+not bother ensuring that p and q are strong primes [3]. While this was
+at one point considered important (e.g., it is required by ANSI
+X9.31), modern factoring algorithms make any advantage of strong
+primes doubtful [4]. RSA Laboratories no longer recommends the
+practice.
+
+More importantly, at no point is any special effort made to securely
+"shred" sensitive memory. This means that it is important that
+functions dealing with private keys and plaintexts (e.g.,
+paillier_keygen and paillier_enc) only be run on trusted machines. The
+resulting ciphertexts and public keys, however, may of course be
+handled in an untrusted manner.
+
+The following paper introduced the basic algorithms that libpaillier
+implements.
+
+  Public-Key Cryptosystems Based on Composite Degree Residuosity
+  Classes. Pascal Paillier. EUROCRYPT 1999.
+
+This next paper is a collection of a number of improvements by Jurik
+and Damgard. We don't do any of this stuff, so implementing some of
+these things would be a great way to contribute.
+
+  Extensions to the Paillier Cryptosystem with Applications to
+  Cryptological Protocols. Mads Jurik. BRICS Dissertation Series,
+  August 2003.
+
+Please report any bugs, questions, comments, and contributions to
+bethenco@cs.berkeley.edu.
+
+Cheers,
+
+John Bethencourt <bethenco@cs.berkeley.edu>
+http://www.cs.berkeley.edu/~bethenco
+
+
+[1] http://en.wikipedia.org/wiki/Paillier_cryptosystem
+
+[2] http://www.swox.com/gmp
+
+[3] http://en.wikipedia.org/wiki/Strong_prime
+
+[4] http://eprint.iacr.org/2001/007
+
+[5] http://www.rsasecurity.com/rsalabs/node.asp?id=2217

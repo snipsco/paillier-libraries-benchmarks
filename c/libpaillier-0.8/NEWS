@@ -1,0 +1,21 @@
+Release 0.8: Saturday, January 30, 2010
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixed memory leak. Thanks to Thomas B. Pedersen for the bug report!
+
+Release 0.7: Friday, December  1, 2006
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Minor cleanup.
+
+Release 0.6: Tuesday, July 25, 2006
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixed major bug in paillier_plaintext_to_bytes. Updated the documentation
+a bit and did some other cleanup.
+
+Release 0.5: Monday, July 24, 2006
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First public release. No known bugs. Little documentation, but should
+be generally useable.
