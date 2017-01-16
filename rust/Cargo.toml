@@ -1,0 +1,14 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Morten Dahl <morten.dahl@snips.ai>"]
+
+[dependencies]
+paillier = { git="ssh://git@github.com/snipsco/rust-paillier.git", branch="mortendahl/crt", features=["keygen"] }
+
+[dev-dependencies]
+bencher = "0.1"
+
+[[bench]]
+name = "runme"
+harness = false
