@@ -10,5 +10,13 @@ paillier = { version="0.1" }
 bencher = "0.1"
 
 [[bench]]
-name = "runme"
+name = "keygen"
+harness = false
+
+[[bench]]
+name = "encryption"
+harness = false
+
+[[bench]]
+name = "decryption"
 harness = false
