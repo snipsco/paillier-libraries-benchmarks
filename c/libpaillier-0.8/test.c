@@ -177,6 +177,19 @@ double test_decryption_random(int bitlength){
 }
 
 
+double test_encryption_small(int bitlength){
+    paillier_keys_t *keys = (paillier_keys_t *)malloc(sizeof(paillier_keys_t));
+    keys->modulusbits = bitlength;
+    paillier_keygen(keys->modulusbits, &(keys->pub), &(keys->prv), paillier_get_rand_devurandom);
+    double small_encryption_times[ROUNDS];
+
+    for(int i = 0; i<ROUNDS; i++){
+        small_encryption_times[i] = time_it(test_paillier_encryption_small, (void*)keys);   
+    }
+    free(keys);
+    return avg_time(small_encryption_times);
+}
+
 
 
 void run_keygen_tests() {
