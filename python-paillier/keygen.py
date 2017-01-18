@@ -1,16 +1,16 @@
 
 import time
-import phe.paillier as paillier
+from paillier.paillier import *
 
-ITERATIONS = 100
-KEY_SIZES = [1024, 2048, 3072, 4096]
+ITERATIONS = 10
+KEY_SIZES = [1024, 2048]
 
 def keygen(key_size):
 
     start = time.time()
 
     for _ in range(ITERATIONS):
-        pubkey, prikey = paillier.generate_paillier_keypair(n_length=key_size)
+        pubkey, prikey = generate_keypair(key_size)
 
     stop = time.time()
 
