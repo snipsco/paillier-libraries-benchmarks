@@ -31,7 +31,7 @@ rustup toolchain install nightly
 rustup default nightly
 ```
 
-### Install Python and depencencies
+### Install Python and dependencies
 
 Python3:
 ```
