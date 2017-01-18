@@ -44,3 +44,24 @@ sudo apt-get install virtualenv
 echo "export LC_ALL=C" >> ~/.bashrc
 source ~/.bashrc
 ```
+
+
+### Install Java
+
+Add Oracle repository:
+```
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+```
+
+Install Oracle Java and set as default:
+```
+sudo apt-get install oracle-java8-installer
+sudo apt install oracle-java8-set-default
+```
+
+Install Maven
+```
+sudo apt-get install maven
+```

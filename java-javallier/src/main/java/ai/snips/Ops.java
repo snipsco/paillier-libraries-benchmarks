@@ -67,34 +67,6 @@ public class Ops {
         add(blackhole, state.pubkey_4096, state.cipher_small_4096, state.cipher_large_4096);
     }
 
-    @Benchmark()
-    @BenchmarkMode(Mode.AverageTime)
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void testAdd_1024(Blackhole blackhole, Keys state) {
-        add(blackhole, state.pubkey_1024, state.cipher_small_1024, state.cipher_large_1024);
-    }
-
-    @Benchmark()
-    @BenchmarkMode(Mode.AverageTime)
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void testAdd_2048(Blackhole blackhole, Keys state) {
-        add(blackhole, state.pubkey_2048, state.cipher_small_2048, state.cipher_large_2048);
-    }
-
-    @Benchmark()
-    @BenchmarkMode(Mode.AverageTime)
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void testAdd_3072(Blackhole blackhole, Keys state) {
-        add(blackhole, state.pubkey_3072, state.cipher_small_3072, state.cipher_large_3072);
-    }
-
-    @Benchmark()
-    @BenchmarkMode(Mode.AverageTime)
-    @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void testAdd_4096(Blackhole blackhole, Keys state) {
-        add(blackhole, state.pubkey_4096, state.cipher_small_4096, state.cipher_large_4096);
-    }
-
     private static void add(Blackhole blackhole, PaillierPublicKey key, EncryptedNumber message1, EncryptedNumber message2) {
         PaillierContext paillierContext = key.createSignedContext();
         blackhole.consume(paillierContext.add(message1, message2));
