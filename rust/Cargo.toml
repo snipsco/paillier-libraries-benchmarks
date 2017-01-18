@@ -20,3 +20,7 @@ harness = false
 [[bench]]
 name = "decryption"
 harness = false
+
+[[bench]]
+name = "addition"
+harness = false
