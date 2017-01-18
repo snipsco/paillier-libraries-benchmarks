@@ -27,6 +27,13 @@ typedef struct PARAM {
     paillier_plaintext_t *plaintext;
 } paillier_t;
 
+typedef struct PARAM_MUL { 
+    paillier_keys_t *keys;
+    paillier_ciphertext_t *ciphertext1;
+    paillier_ciphertext_t *ciphertext2;
+    paillier_ciphertext_t *ciphertext_result;
+} paillier_mul_t;
+
 
 
 void test_paillier_keygen(void *keys) {
@@ -50,17 +57,18 @@ void test_paillier_encryption_random(void *keys) {
     paillier_enc(0, my_keys->pub, magic_number, paillier_get_rand_devurandom);
 }
 
-void test_paillier_decryption_small(void *params) {
+void test_paillier_decryption(void *params) {
     paillier_t *my_params = (paillier_t *)params;
     paillier_plaintext_t* sum;
-    sum = paillier_dec(my_params->plaintext, my_params->keys->pub, my_params->keys->prv, my_params->ciphertext);
+    paillier_dec(my_params->plaintext, my_params->keys->pub, my_params->keys->prv, my_params->ciphertext);
 }
 
-void test_paillier_decryption_random(void *params) {
-    paillier_t *my_params = (paillier_t *)params;
-    paillier_plaintext_t* sum;
-    sum = paillier_dec(my_params->plaintext, my_params->keys->pub, my_params->keys->prv, my_params->ciphertext);
+void test_paillier_multiplication(void *params) {
+    paillier_mul_t *my_params = (paillier_mul_t *)params;
+    paillier_mul(my_params->keys->pub, my_params->ciphertext_result, my_params->ciphertext1, my_params->ciphertext2);
 }
+
+
 
 
 /* Function to time other functions */ 
@@ -144,7 +152,7 @@ double test_decryption_small(int bitlength){
     double small_decryption_times[ROUNDS];
 
     for(int i = 0; i<ROUNDS; i++){
-        small_decryption_times[i] = time_it(test_paillier_decryption_small, (void*)params);
+        small_decryption_times[i] = time_it(test_paillier_decryption, (void*)params);
     }
     free(keys);
     free(params);
@@ -169,13 +177,45 @@ double test_decryption_random(int bitlength){
     double small_decryption_times[ROUNDS];
 
     for(int i = 0; i<ROUNDS; i++){
-        small_decryption_times[i] = time_it(test_paillier_decryption_small, (void*)params);
+        small_decryption_times[i] = time_it(test_paillier_decryption, (void*)params);
     }
     free(keys);
     free(params);
     return avg_time(small_decryption_times);
 }
 
+
+double test_multiplication(int bitlength){
+    paillier_keys_t *keys = (paillier_keys_t *)malloc(sizeof(paillier_keys_t));
+    keys->modulusbits = bitlength;
+    paillier_keygen(keys->modulusbits, &(keys->pub), &(keys->prv), paillier_get_rand_devurandom);
+    paillier_plaintext_t* magic_number;
+    paillier_plaintext_t* magic_number_random;
+    paillier_ciphertext_t* ciphertext1;
+    paillier_ciphertext_t* ciphertext2;
+    magic_number = paillier_plaintext_from_ui(42);
+    ciphertext1 = paillier_enc(0, keys->pub, magic_number, paillier_get_rand_devurandom);
+
+    char *magic_number_str = "9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729";
+    magic_number_random = paillier_plaintext_from_str(magic_number_str);
+    ciphertext2 = paillier_enc(0, keys->pub, magic_number_random, paillier_get_rand_devurandom);
+
+    paillier_mul_t *params = (paillier_mul_t *)malloc(sizeof(paillier_mul_t));
+    paillier_ciphertext_t *result = (paillier_ciphertext_t *) malloc (sizeof(paillier_ciphertext_t));
+    params->keys = keys;
+    params->ciphertext1 = ciphertext1;
+    params->ciphertext2 = ciphertext2;
+    params->ciphertext_result = ciphertext2;  // change this! allocate space
+
+    double multiplication_times[ROUNDS];
+
+    for(int i = 0; i<ROUNDS; i++){
+        multiplication_times[i] = time_it(test_paillier_multiplication, (void*)params);
+    }
+    free(keys);
+    free(params);
+    return avg_time(multiplication_times);
+}
 
 
 
@@ -214,6 +254,12 @@ void run_decryption_random_tests(){
     printf("DECRYPTION RANDOM (%d bits) AVG TIME: %lf ms\n", 4096, test_decryption_random(4096)*1000);
 }
 
+void run_multiplication_tests(){
+    printf("MULTIPLICATION (%d bits) AVG TIME: %lf ms\n", 1024, test_multiplication(1024)*1000);
+    printf("MULTIPLICATION (%d bits) AVG TIME: %lf ms\n", 2048, test_multiplication(2048)*1000);
+    printf("MULTIPLICATION (%d bits) AVG TIME: %lf ms\n", 3072, test_multiplication(3072)*1000);
+    printf("MULTIPLICATION (%d bits) AVG TIME: %lf ms\n", 4096, test_multiplication(4096)*1000);
+}
 
 
 int main(int argc, char **argv)
@@ -226,6 +272,7 @@ int main(int argc, char **argv)
     run_encryption_random_tests();
     run_decryption_small_tests();
     run_decryption_random_tests();
+    run_multiplication_tests();
     
 //    gmp_printf("The public key is: %Zd\n", &keys->pub->n);
     
