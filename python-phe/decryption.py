@@ -19,7 +19,7 @@ def decryption(key_size, plaintext):
     start = time.time()
 
     for _ in range(ITERATIONS):
-        _ = prikey.decrypt(c)
+        n = prikey.decrypt(c)
 
     stop = time.time()
 
