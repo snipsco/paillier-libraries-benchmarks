@@ -265,13 +265,13 @@ void run_multiplication_tests(){
 int main(int argc, char **argv)
 {
     /* KEYGEN TESTS */
-    //run_keygen_tests();
+    run_keygen_tests();
 
 
-    //run_encryption_small_tests();
-    //run_encryption_random_tests();
-    //run_decryption_small_tests();
-    //run_decryption_random_tests();
+    run_encryption_small_tests();
+    run_encryption_random_tests();
+    run_decryption_small_tests();
+    run_decryption_random_tests();
     run_multiplication_tests();
     
 //    gmp_printf("The public key is: %Zd\n", &keys->pub->n);
