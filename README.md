@@ -65,3 +65,10 @@ Install Maven
 ```
 sudo apt-get install maven
 ```
+
+
+### Install Julia
+
+```
+sudo apt-get install julia
+```
