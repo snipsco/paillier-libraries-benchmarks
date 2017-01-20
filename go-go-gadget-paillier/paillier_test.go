@@ -70,26 +70,9 @@ func benchmarkDecryptionLarge(size int, b *testing.B) {
 	}
 }
 
-func benchmarkAddition(size int, b *testing.B) {
-	ms := new(big.Int).SetInt64(42)
-	m := new(big.Int)
-	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
-	privKey, errz := paillier.GenerateKey(rand.Reader, size)
-	if errz != nil {
-		println("error")
-	}
-	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
-	cs, errs := paillier.Encrypt(&privKey.PublicKey, ms.Bytes())
-	if err != nil {
-		println("error")
-	}
-
-	if errs != nil {
-		println("error")
-	}
-
+func benchmarkAddition(pubKey *paillier.PublicKey, cipher1, cipher2 []byte, b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		paillier.AddCipher(&privKey.PublicKey, c, cs)
+		paillier.AddCipher(pubKey, cipher1, cipher2)
 	}
 }
 
@@ -118,10 +101,89 @@ func BenchmarkDecryptionLarge2048(b *testing.B) { benchmarkDecryptionLarge(2048,
 func BenchmarkDecryptionLarge3072(b *testing.B) { benchmarkDecryptionLarge(3072, b) }
 func BenchmarkDecryptionLarge4096(b *testing.B) { benchmarkDecryptionLarge(4096, b) }
 
-func BenchmarkAdditionLarge1024(b *testing.B) { benchmarkAddition(1024, b) }
-func BenchmarkAdditionLarge2048(b *testing.B) { benchmarkAddition(2048, b) }
-func BenchmarkAdditionLarge3072(b *testing.B) { benchmarkAddition(3072, b) }
-func BenchmarkAdditionLarge4096(b *testing.B) { benchmarkAddition(4096, b) }
+func BenchmarkAdditionLarge1024(b *testing.B) {
+	ms := new(big.Int).SetInt64(42)
+	m := new(big.Int)
+	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
+	privKey, errz := paillier.GenerateKey(rand.Reader, 1024)
+	if errz != nil {
+		println("error")
+	}
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
+	cs, errs := paillier.Encrypt(&privKey.PublicKey, ms.Bytes())
+	if err != nil {
+		println("error")
+	}
+
+	if errs != nil {
+		println("error")
+	}
+
+	benchmarkAddition(&privKey.PublicKey, c, cs, b)
+}
+
+func BenchmarkAdditionLarge2048(b *testing.B) {
+	ms := new(big.Int).SetInt64(42)
+	m := new(big.Int)
+	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
+	privKey, errz := paillier.GenerateKey(rand.Reader, 2048)
+	if errz != nil {
+		println("error")
+	}
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
+	cs, errs := paillier.Encrypt(&privKey.PublicKey, ms.Bytes())
+	if err != nil {
+		println("error")
+	}
+
+	if errs != nil {
+		println("error")
+	}
+
+	benchmarkAddition(&privKey.PublicKey, c, cs, b)
+}
+
+func BenchmarkAdditionLarge3072(b *testing.B) {
+	ms := new(big.Int).SetInt64(42)
+	m := new(big.Int)
+	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
+	privKey, errz := paillier.GenerateKey(rand.Reader, 3072)
+	if errz != nil {
+		println("error")
+	}
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
+	cs, errs := paillier.Encrypt(&privKey.PublicKey, ms.Bytes())
+	if err != nil {
+		println("error")
+	}
+
+	if errs != nil {
+		println("error")
+	}
+
+	benchmarkAddition(&privKey.PublicKey, c, cs, b)
+}
+
+func BenchmarkAdditionLarge4096(b *testing.B) {
+	ms := new(big.Int).SetInt64(42)
+	m := new(big.Int)
+	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
+	privKey, errz := paillier.GenerateKey(rand.Reader, 4096)
+	if errz != nil {
+		println("error")
+	}
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
+	cs, errs := paillier.Encrypt(&privKey.PublicKey, ms.Bytes())
+	if err != nil {
+		println("error")
+	}
+
+	if errs != nil {
+		println("error")
+	}
+
+	benchmarkAddition(&privKey.PublicKey, c, cs, b)
+}
 
 func TestCorrectness(t *testing.T) {
 	// Generate a 128-bit private key.

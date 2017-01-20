@@ -68,5 +68,5 @@ This library was created primarily for education purposes, with future applicati
 
 ## Benchmarks
 ```bash
-$ go test -timeout 5h -bench=. -benchtime=30s
+$ go test -timeout 5h -bench=. -benchtime=2m
 ```
