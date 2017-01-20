@@ -1,5 +1,7 @@
 Library available at https://github.com/NICTA/python-paillier.
 
+Requires GMP to be installed.
+
 ### Create virtual environment (optionally)
 ```
 virtualenv -p python3 env

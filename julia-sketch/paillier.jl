@@ -1,6 +1,8 @@
-type PrivateEncryptionKey
+type PrivateDecryptionKey
     l::BigInt
     m::BigInt
+    n::BigInt
+    n_sq::BigInt
 end
 
 type PublicEncryptionKey
@@ -9,14 +11,16 @@ type PublicEncryptionKey
     g::BigInt
 end
 
-PublicEncryptionKey(n) = PublicEncryptionKey(n,n^2,n+1)
 PublicEncryptionKey(p,q) = PublicEncryptionKey(p*q)
+PublicEncryptionKey(n) = PublicEncryptionKey(n,n^2,n+1)
 
-function PrivateEncryptionKey(p,q,n)
+PrivateDecryptionKey(p,q) = PrivateDecryptionKey(p,q,p*q)
+function PrivateDecryptionKey(p,q,n)
     l = (p-1)*(q-1)
     m = invmod(l, n)
-    PrivateEncryptionKey(l,m)
+    PrivateDecryptionKey(l,m,n,n^2)
 end
+
 
 function encrypt(pub::PublicEncryptionKey, m)
     rng = RandomDevice()
@@ -26,7 +30,7 @@ function encrypt(pub::PublicEncryptionKey, m)
     c = mod(gm * rn, pub.n_sq)
 end
 
-function decrypt(priv, pub, cipher)
-    x = powermod(cipher, priv.l, pub.n_sq) - 1
-    plain = mod(div(x, pub.n) * priv.m, pub.n)
+function decrypt(priv::PrivateDecryptionKey, c)
+    x = powermod(c, priv.l, priv.n_sq) - 1
+    m = mod(div(x, priv.n) * priv.m, priv.n)
 end
