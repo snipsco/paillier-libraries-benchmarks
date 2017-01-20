@@ -1,4 +1,8 @@
-### Run benches
+# Julia
+
+This is the bench for a quick implementation of Paillier using Julia's native `BigInt` (which wraps GMP). Key generation is not implemented.
+
+## Benching
 
 Either run all of them:
 ```

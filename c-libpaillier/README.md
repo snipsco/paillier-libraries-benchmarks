@@ -1,4 +1,13 @@
-### Building the library
+# libpaillier
+
+This is the bench of [libpaillier](http://acsc.cs.utexas.edu/libpaillier/) written in C.
+
+## Prerequisites
+
+Requires GMP to be installed.
+
+
+## Installation
 
 Run the following to build the libpaillier library:
 ```
@@ -16,14 +25,14 @@ cd ..
 ```
 
 
-### Building the bench
+## Benching
 
+Building the bench:
 ```
 gcc -O3 bench.c libpaillier-0.8/paillier.o -Ilibpaillier-0.8 -lgmp -o bench
 ```
 
-
-### Running the bench
+Running the bench
 ```
 ./bench
 ```

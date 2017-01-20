@@ -1,6 +1,13 @@
-Library available at https://github.com/NICTA/python-paillier.
 
-Requires GMP to be installed.
+# phe
+
+This is the bench of the [phe](https://github.com/NICTA/python-paillier) library.
+
+## Prerequisites
+
+GMP.
+
+## Installation
 
 ### Create virtual environment (optionally)
 ```
@@ -13,7 +20,7 @@ source env/bin/activate
 pip3 install phe
 ```
 
-### Run benches
+## Benching
 
 Run all in sequence:
 ```

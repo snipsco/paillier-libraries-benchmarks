@@ -1,7 +1,13 @@
+# rust-paillier
+
+This is the bench of the [rust-paillier](https://github.com/snipsco/rust-paillier) library written in Rust and using GMP.
+
+## Prerequisites
+
 Requires GMP to be installed.
 
 
-### Run benches
+## Benching
 
 Either run all of them:
 ```

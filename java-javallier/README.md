@@ -1,6 +1,6 @@
-# Javalier / JMH
+# Javallier / JMH
 
-This is the JMB bench for the javaillier library.
+This is the JMB bench for the [javallier](https://github.com/NICTA/javallier) library written in Java.
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ Java and Maven must be installed.
 
 `java -jar target/benchmarks.jar`
 
-Due to JVM relatively high performance variablity, this takes a while. You can
+Due to JVM relatively high performance variability, this takes a while. You can
 tweak various running parameters or select different test from the command line.
 
 For instance:

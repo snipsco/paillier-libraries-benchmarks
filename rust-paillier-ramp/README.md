@@ -1,4 +1,8 @@
-### Run benches
+# rust-paillier
+
+This is the bench of the [rust-paillier](https://github.com/snipsco/rust-paillier) library written in Rust and using RAMP.
+
+## Benching
 
 Either run all of them:
 ```

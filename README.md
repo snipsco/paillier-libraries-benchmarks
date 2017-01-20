@@ -72,3 +72,10 @@ sudo apt-get install maven
 ```
 sudo apt-get install julia
 ```
+
+
+### Install Go
+```
+sudo apt-get install golang
+echo "export GOPATH=~/.go" >> ~/.bashrc
+```
