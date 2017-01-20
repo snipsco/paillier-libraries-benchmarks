@@ -1,3 +1,6 @@
+Requires GMP to be installed.
+
+
 ### Run benches
 
 Either run all of them:
