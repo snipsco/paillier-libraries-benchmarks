@@ -1,4 +1,4 @@
-Library available at https://github.com/NICTA/python-paillier.
+Library available at https://github.com/mikeivanov/paillier.
 
 ### Create virtual environment (optionally)
 ```
