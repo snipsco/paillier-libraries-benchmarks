@@ -34,3 +34,7 @@ function decrypt(priv::PrivateDecryptionKey, c)
     x = powermod(c, priv.l, priv.n_sq) - 1
     m = mod(div(x, priv.n) * priv.m, priv.n)
 end
+
+function add(pub::PublicEncryptionKey, c1, c2)
+    c = mod(c1 * c2, pub.n_sq)
+end
