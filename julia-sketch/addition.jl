@@ -3,7 +3,7 @@ include("paillier.jl")
 include("primes.jl")
 include("plaintexts.jl")
 
-ITERATIONS = 100
+ITERATIONS = 1000
 
 PUBKEYS = Dict()
 for (keysize, primes) in PRIMES
