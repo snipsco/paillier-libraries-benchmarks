@@ -1,0 +1,26 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Morten Dahl <morten.dahl@snips.ai>"]
+
+[dependencies]
+paillier = { version="0.1", default-features=false, features=["inclgmp", "defaultgmp", "keygen"] }
+
+[dev-dependencies]
+bencher = "0.1"
+
+[[bench]]
+name = "keygen"
+harness = false
+
+[[bench]]
+name = "encryption"
+harness = false
+
+[[bench]]
+name = "decryption"
+harness = false
+
+[[bench]]
+name = "addition"
+harness = false
