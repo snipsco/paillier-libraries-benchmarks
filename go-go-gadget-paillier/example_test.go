@@ -1,13 +1,9 @@
-package paillier_test
+package paillier
 
 import (
 	"crypto/rand"
 	"fmt"
-	"log"
 	"math/big"
-	"time"
-
-	"github.com/roasbeef/go-go-gadget-paillier"
 )
 
 // This example demonstrates basic usage of this library.
@@ -17,12 +13,8 @@ import (
 //   * Homomorphic addition with constant
 //   * Homomorphic multiplication with constant
 func main() {
-
-	start := time.Now()
-	privKey, err := paillier.GenerateKey(rand.Reader, 1024)
-	elapsed := time.Since(start)
-	log.Printf("GenerateKey %s", elapsed)
-
+	// Generate a 128-bit private key.
+	privKey, err := GenerateKey(rand.Reader, 128)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -30,14 +22,14 @@ func main() {
 
 	// Encrypt the number "15".
 	m15 := new(big.Int).SetInt64(15)
-	c15, err := paillier.Encrypt(&privKey.PublicKey, m15.Bytes())
+	c15, err := Encrypt(&privKey.PublicKey, m15.Bytes())
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	// Decrypt the number "15".
-	d, err := paillier.Decrypt(privKey, c15)
+	d, err := Decrypt(privKey, c15)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -48,15 +40,15 @@ func main() {
 	// Now for the fun stuff.
 	// Encrypt the number "20".
 	m20 := new(big.Int).SetInt64(20)
-	c20, err := paillier.Encrypt(&privKey.PublicKey, m20.Bytes())
+	c20, err := Encrypt(&privKey.PublicKey, m20.Bytes())
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	// Add the encrypted integers 15 and 20 together.
-	plusM16M20 := paillier.AddCipher(&privKey.PublicKey, c15, c20)
-	decryptedAddition, err := paillier.Decrypt(privKey, plusM16M20)
+	plusM16M20 := AddCipher(&privKey.PublicKey, c15, c20)
+	decryptedAddition, err := Decrypt(privKey, plusM16M20)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -65,8 +57,8 @@ func main() {
 		new(big.Int).SetBytes(decryptedAddition).String()) // 35
 
 	// Add the encrypted integer 15 to plaintext constant 10.
-	plusE15and10 := paillier.Add(&privKey.PublicKey, c15, new(big.Int).SetInt64(10).Bytes())
-	decryptedAddition, err = paillier.Decrypt(privKey, plusE15and10)
+	plusE15and10 := Add(&privKey.PublicKey, c15, new(big.Int).SetInt64(10).Bytes())
+	decryptedAddition, err = Decrypt(privKey, plusE15and10)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -75,8 +67,8 @@ func main() {
 		new(big.Int).SetBytes(decryptedAddition).String()) // 25
 
 	// Multiply the encrypted integer 15 by the plaintext constant 10.
-	mulE15and10 := paillier.Mul(&privKey.PublicKey, c15, new(big.Int).SetInt64(10).Bytes())
-	decryptedMul, err := paillier.Decrypt(privKey, mulE15and10)
+	mulE15and10 := Mul(&privKey.PublicKey, c15, new(big.Int).SetInt64(10).Bytes())
+	decryptedMul, err := Decrypt(privKey, mulE15and10)
 	if err != nil {
 		fmt.Println(err)
 		return
