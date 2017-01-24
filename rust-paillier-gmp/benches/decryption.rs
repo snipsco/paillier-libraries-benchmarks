@@ -10,7 +10,7 @@ where
     KS: KeySize,
     PT: Plaintext
 {
-    let (ek, dk) = Paillier::keypair_with_modulus_size(KS::get());
+    let (ek, dk) = Paillier::keypair_with_modulus_size(KS::get()).keys();
     let m = core::Plaintext(PT::get());
     let c = Paillier::encrypt(&ek, &m);
 

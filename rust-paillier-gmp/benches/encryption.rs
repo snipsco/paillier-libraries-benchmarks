@@ -10,7 +10,7 @@ where
     KS: KeySize,
     PT: Plaintext
 {
-    let (ek, _) = Paillier::keypair_with_modulus_size(KS::get());
+    let (ek, _) = Paillier::keypair_with_modulus_size(KS::get()).keys();
     let m = core::Plaintext(PT::get());
 
     b.iter(|| {
