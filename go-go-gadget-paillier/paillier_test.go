@@ -2,12 +2,13 @@ package paillier_test
 
 import (
 	"crypto/rand"
-	"github.com/mcornejo/go-go-gadget-paillier"
 	"math/big"
 	"testing"
+
+	"github.com/mcornejo/go-go-gadget-paillier"
 )
 
-func params1024() (*PrivateKey, error) {
+func params1024() (*paillier.PrivateKey, error) {
 
 	n := new(big.Int)
 	n.SetString("132989409112355228761579415457488433907688906677593349228013438645565839957100608462293264591894615668222295879861103227867769615052249603407285709399529034095805390029151207343268742858117923828477297771438299333052318684739524226934174877932946918091645736270444081658156432079768051878897861362590750992309", 10)
@@ -24,8 +25,8 @@ func params1024() (*PrivateKey, error) {
 	u := new(big.Int)
 	u.SetString("27978196296067113345228212505074452971999659596003813606274518462689762495720314198357290921961949015362199152004628530628155083858035029005374728247734258386817094532004049229074251693254121672987427269820391778936785593510244947980538250572640574657723746035990290084495918014642407600561061264338532887949", 10)
 
-	return &PrivateKey{
-		PublicKey: PublicKey{
+	return &paillier.PrivateKey{
+		PublicKey: paillier.PublicKey{
 			N:        n,
 			NSquared: nsq,
 			G:        g, // g = n + 1
@@ -35,7 +36,7 @@ func params1024() (*PrivateKey, error) {
 	}, nil
 }
 
-func params2048() (*PrivateKey, error) {
+func params2048() (*paillier.PrivateKey, error) {
 
 	n := new(big.Int)
 	n.SetString("24842621598753006699910848307571369745444040103729114038565327313437917071560538687235248564783885333926972291165652032799580469839472074590585139929355068675691514935749843674423685644220388096791337044403174469774955914907680731309445583378641838637856891163457215954494409924974285235648665187961212568008891042637985379146688124404421004461219663729140839314213844178084541124375185536162331780586598491606670646647699552826773251892522781648596634615538982399787315544821063302217039085298957518383901407286626680195175786219699709590705894092775189976458535735589933604125784688922582739590005169449353697122387", 10)
@@ -52,8 +53,8 @@ func params2048() (*PrivateKey, error) {
 	u := new(big.Int)
 	u.SetString("24625144112844747286412301625922778913397924449367993706761784186480489319582252614656379303429455320045739161766017671963316392824990575269767625904331050694749644078600450864072325487211930208182506576342704045258217810645129589076717072971119385421393543629479637692099123381056514549663744571550856670449067773948991968423462606312378005458412798474289222068246665148179364313373040324698581470813281757334950128350143224748183955087233406276627955178933953036238464062292677413298532510441245486116757907709062600497628891952553522564432360599389935309767189044160341659753221624147878814668942361477868725998183", 10)
 
-	return &PrivateKey{
-		PublicKey: PublicKey{
+	return &paillier.PrivateKey{
+		PublicKey: paillier.PublicKey{
 			N:        n,
 			NSquared: nsq,
 			G:        g, // g = n + 1
@@ -63,7 +64,7 @@ func params2048() (*PrivateKey, error) {
 	}, nil
 }
 
-func params3072() (*PrivateKey, error) {
+func params3072() (*paillier.PrivateKey, error) {
 
 	n := new(big.Int)
 	n.SetString("4233421648514535164192623607124070717725376967054769280199683763668971863281543898428023925059857895640476734242454268795099257758188626988304256251939841660326327986651429504061643508081066974604594623613615378177694373612920749933896199478778033970797511134362268378728990588400700095587513417472980122073567753312351171004948567614197777839509905960580489344296644504403104943341446772642706395500147243493967523908746040345737265039680877986544241050283556112313860759272283241843539071024702893830184299500765856826751100381535464122067622779705613066196890939190900342853934292017063102432895873325497770808365065401443865748154800642100093881875445825471588083684402212969711576674185635561661753758623430849502755362027949115862298161572516247906844795735103647730274457865856695619696922329584053227472737777335341305840277744416150223055856010211955931479789325159952240683089992350394738316521279548928145850185407", 10)
@@ -80,8 +81,8 @@ func params3072() (*PrivateKey, error) {
 	u := new(big.Int)
 	u.SetString("2128786688915223642348086448556137111195210768726296660125624483683922909098202137902315778372864264494337293707674706020792151529184969657802036982210551474787853184347518900899753787007591876051273732669848331308182222991414263732664219872882602219889331418065769444707979965794145570717923969607846754897697549971705692649814243922319266418621039483191818904857467782824121827494412255112203132143770324315602818091602625640639745635541184800728587494126829315403651126193701672375570276506698261248660138656078637166176312315329713088977587149647547182218277683117629760784273265574943865557723861495617203032340692589646125634571200265671409432701211441344297002025345853584952147068234312378490133084019384730122563051162477338069553022079347807711911813909990856685043141412452126453946090770013689412832781166395555010984385025641836954732548271667968886479666188836193482075454895501985366747968124149508327134483258", 10)
 
-	return &PrivateKey{
-		PublicKey: PublicKey{
+	return &paillier.PrivateKey{
+		PublicKey: paillier.PublicKey{
 			N:        n,
 			NSquared: nsq,
 			G:        g, // g = n + 1
@@ -91,7 +92,7 @@ func params3072() (*PrivateKey, error) {
 	}, nil
 }
 
-func params4096() (*PrivateKey, error) {
+func params4096() (*paillier.PrivateKey, error) {
 
 	n := new(big.Int)
 	n.SetString("56863325828177038326393710756876178897890116984140692064513359235531219599005847695925902696596404786845074694491942997679491962443466794670497528079635980705723855342394349213465232817470998503020643982102580782977056832760944222870238380374769291301725269872718292918390747212381644289332451714980406039610147672354659497025734831709299263500679168676871191329570781994380160358231653341302145578754166136787150809324559311450232734819173935374728491470652656847618388649677515414286371057684759119376090340821726708080137533509774455974684771812417680681124943212067218705694939305137085005218589803837089217586950272342183024477614946415082696204570486586263040312888852095544376504733996690874033024922580768015147026320754083133198275740102793293730319593844811742666762750808668976600309527171690023232038805355572716664444078370912539328802871405528357387252791639815969397784827378340770733196479144924023296615601593316223083345878922420519181130023367401354736502830375900309413267139247785040450827107332617832743623568111162267239928330812886131487366462802710464819377372020207995113033274119552255241146998105792341278711167325962562381473405962194437236534614230762013103682430217194110460978607651942586774751633103", 10)
@@ -108,8 +109,8 @@ func params4096() (*PrivateKey, error) {
 	u := new(big.Int)
 	u.SetString("30404103333948440741195658375358672078721265467715386899517323101978785533782993758412478186877676049090311180395544984596302863843245655241076832731963042149181101840119017387127991300276135053105062940595260512271973409967903332536148126821650475252368828109824007957768029039582399184084673709947723465111588410721226352254236391640404620622905135515179395931501284253201371843680609080311854379039353675821747457472974076215664424572902716606353249498497391036642325405223453596317094076703614988601268213829607817646139661419465248157384174679431009981374871368240412720785006409117202524157947620600448591602258341947272766969123079358671403022339338356295963343994007625209678502105321632314451906401009998048890208985743562010672163856480756556396615218963303926590084433868587511270566455833693970648548502629853994349351958350610699289901931985654000949077731144070915502431268069596670606831115990442165270372658455121015057194241585437696791695323420367592820172828513769012784687972164444625129144455872526726282370473453166609666095067535004315906628662171509769438390513256227382458164219075408664321539387775546866033176765246589495272525862205692413521848153324865745214136426859675205377021819280675932554456599118", 10)
 
-	return &PrivateKey{
-		PublicKey: PublicKey{
+	return &paillier.PrivateKey{
+		PublicKey: paillier.PublicKey{
 			N:        n,
 			NSquared: nsq,
 			G:        g, // g = n + 1
@@ -121,22 +122,22 @@ func params4096() (*PrivateKey, error) {
 
 func benchmarkKey(size int, b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		GenerateKey(rand.Reader, size)
+		paillier.GenerateKey(rand.Reader, size)
 	}
 }
 
-func benchmarkEncryptionSmall(f func() (*PrivateKey, error), b *testing.B) {
+func benchmarkEncryptionSmall(f func() (*paillier.PrivateKey, error), b *testing.B) {
 	m := new(big.Int).SetInt64(42)
 	privKey, err := f()
 	if err != nil {
 		println("error")
 	}
 	for n := 0; n < b.N; n++ {
-		Encrypt(&privKey.PublicKey, m.Bytes())
+		paillier.Encrypt(&privKey.PublicKey, m.Bytes())
 	}
 }
 
-func benchmarkEncryptionLarge(f func() (*PrivateKey, error), b *testing.B) {
+func benchmarkEncryptionLarge(f func() (*paillier.PrivateKey, error), b *testing.B) {
 	m := new(big.Int)
 	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
 	privKey, err := f()
@@ -144,44 +145,44 @@ func benchmarkEncryptionLarge(f func() (*PrivateKey, error), b *testing.B) {
 		println("error")
 	}
 	for n := 0; n < b.N; n++ {
-		Encrypt(&privKey.PublicKey, m.Bytes())
+		paillier.Encrypt(&privKey.PublicKey, m.Bytes())
 	}
 }
 
-func benchmarkDecryptionSmall(f func() (*PrivateKey, error), b *testing.B) {
+func benchmarkDecryptionSmall(f func() (*paillier.PrivateKey, error), b *testing.B) {
 	m := new(big.Int).SetInt64(42)
 	privKey, err := f()
 	if err != nil {
 		println("error")
 	}
-	c, err := Encrypt(&privKey.PublicKey, m.Bytes())
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
 	if err != nil {
 		println("error")
 	}
 
 	for n := 0; n < b.N; n++ {
-		Decrypt(privKey, c)
+		paillier.Decrypt(privKey, c)
 	}
 }
 
-func benchmarkDecryptionLarge(f func() (*PrivateKey, error), b *testing.B) {
+func benchmarkDecryptionLarge(f func() (*paillier.PrivateKey, error), b *testing.B) {
 	m := new(big.Int)
 	m.SetString("9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729", 10)
 	privKey, err := f()
 	if err != nil {
 		println("error")
 	}
-	c, err := Encrypt(&privKey.PublicKey, m.Bytes())
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
 	if err != nil {
 		println("error")
 	}
 
 	for n := 0; n < b.N; n++ {
-		Decrypt(privKey, c)
+		paillier.Decrypt(privKey, c)
 	}
 }
 
-func benchmarkAddition(f func() (*PrivateKey, error), b *testing.B) {
+func benchmarkAddition(f func() (*paillier.PrivateKey, error), b *testing.B) {
 
 	ms := new(big.Int).SetInt64(42)
 	m := new(big.Int)
@@ -190,8 +191,8 @@ func benchmarkAddition(f func() (*PrivateKey, error), b *testing.B) {
 	if errz != nil {
 		println("error")
 	}
-	c, err := Encrypt(&privKey.PublicKey, m.Bytes())
-	cs, errs := Encrypt(&privKey.PublicKey, ms.Bytes())
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
+	cs, errs := paillier.Encrypt(&privKey.PublicKey, ms.Bytes())
 	if err != nil {
 		println("error")
 	}
@@ -201,7 +202,7 @@ func benchmarkAddition(f func() (*PrivateKey, error), b *testing.B) {
 	}
 
 	for n := 0; n < b.N; n++ {
-		AddCipher(&privKey.PublicKey, c, cs)
+		paillier.AddCipher(&privKey.PublicKey, c, cs)
 	}
 }
 
@@ -230,38 +231,38 @@ func BenchmarkDecryptionLarge2048(b *testing.B) { benchmarkDecryptionLarge(param
 func BenchmarkDecryptionLarge3072(b *testing.B) { benchmarkDecryptionLarge(params3072, b) }
 func BenchmarkDecryptionLarge4096(b *testing.B) { benchmarkDecryptionLarge(params4096, b) }
 
-func BenchmarkAdditionLarge1024(b *testing.B) { Addition(params1024, b) }
-func BenchmarkAdditionLarge2048(b *testing.B) { Addition(params2048, b) }
-func BenchmarkAdditionLarge3072(b *testing.B) { Addition(params3072, b) }
-func BenchmarkAdditionLarge4096(b *testing.B) { Addition(params4096, b) }
+func BenchmarkAdditionLarge1024(b *testing.B) { benchmarkAddition(params1024, b) }
+func BenchmarkAdditionLarge2048(b *testing.B) { benchmarkAddition(params2048, b) }
+func BenchmarkAdditionLarge3072(b *testing.B) { benchmarkAddition(params3072, b) }
+func BenchmarkAdditionLarge4096(b *testing.B) { benchmarkAddition(params4096, b) }
 
 func TestPrintParams(t *testing.T) {
 
 	// Generate a 128-bit private key.
-	privKey, err := GenerateKey(rand.Reader, 4092)
+	privKey, err := paillier.GenerateKey(rand.Reader, 4092)
 	if err != nil {
 		t.Fatalf("Unable to generate private key: ", err)
 	}
 
 	// Encrypt the integer 15.
 	m15 := new(big.Int).SetInt64(15)
-	c15, err := Encrypt(&privKey.PublicKey, m15.Bytes())
+	c15, err := paillier.Encrypt(&privKey.PublicKey, m15.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
 
 	// Encrypt the integer 20.
 	m20 := new(big.Int).SetInt64(20)
-	c20, err := Encrypt(&privKey.PublicKey, m20.Bytes())
+	c20, err := paillier.Encrypt(&privKey.PublicKey, m20.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
 
 	// Now homomorphically add the encrypted integers.
-	addedCiphers := AddCipher(&privKey.PublicKey, c15, c20)
+	addedCiphers := paillier.AddCipher(&privKey.PublicKey, c15, c20)
 
 	// When decrypted, the result should be 15+20 = 35
-	plaintext, err := Decrypt(privKey, addedCiphers)
+	plaintext, err := paillier.Decrypt(privKey, addedCiphers)
 	if err != nil {
 		t.Fatalf("Unable to decrypted cipher text: ", err)
 	}
@@ -275,20 +276,20 @@ func TestPrintParams(t *testing.T) {
 
 func TestCorrectness(t *testing.T) {
 	// Generate a 128-bit private key.
-	privKey, err := GenerateKey(rand.Reader, 128)
+	privKey, err := paillier.GenerateKey(rand.Reader, 128)
 	if err != nil {
 		t.Fatalf("Unable to generate private key: ", err)
 	}
 
 	// Encrypt the integer 15.
 	m := new(big.Int).SetInt64(15)
-	c, err := Encrypt(&privKey.PublicKey, m.Bytes())
+	c, err := paillier.Encrypt(&privKey.PublicKey, m.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
 
 	// Now decrypt the cipher text. Should come back out to 15.
-	d, err := Decrypt(privKey, c)
+	d, err := paillier.Decrypt(privKey, c)
 	if err != nil {
 		t.Fatalf("Unable to decrypt cipher text: ", err)
 	}
@@ -301,30 +302,30 @@ func TestCorrectness(t *testing.T) {
 
 func TestHomomorphicCipherTextAddition(t *testing.T) {
 	// Generate a 128-bit private key.
-	privKey, err := GenerateKey(rand.Reader, 128)
+	privKey, err := paillier.GenerateKey(rand.Reader, 128)
 	if err != nil {
 		t.Fatalf("Unable to generate private key: ", err)
 	}
 
 	// Encrypt the integer 15.
 	m15 := new(big.Int).SetInt64(15)
-	c15, err := Encrypt(&privKey.PublicKey, m15.Bytes())
+	c15, err := paillier.Encrypt(&privKey.PublicKey, m15.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
 
 	// Encrypt the integer 20.
 	m20 := new(big.Int).SetInt64(20)
-	c20, err := Encrypt(&privKey.PublicKey, m20.Bytes())
+	c20, err := paillier.Encrypt(&privKey.PublicKey, m20.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
 
 	// Now homomorphically add the encrypted integers.
-	addedCiphers := AddCipher(&privKey.PublicKey, c15, c20)
+	addedCiphers := paillier.AddCipher(&privKey.PublicKey, c15, c20)
 
 	// When decrypted, the result should be 15+20 = 35
-	plaintext, err := Decrypt(privKey, addedCiphers)
+	plaintext, err := paillier.Decrypt(privKey, addedCiphers)
 	if err != nil {
 		t.Fatalf("Unable to decrypted cipher text: ", err)
 	}
@@ -337,14 +338,14 @@ func TestHomomorphicCipherTextAddition(t *testing.T) {
 
 func TestHomomorphicConstantAddition(t *testing.T) {
 	// Generate a 128-bit private key.
-	privKey, err := GenerateKey(rand.Reader, 128)
+	privKey, err := paillier.GenerateKey(rand.Reader, 128)
 	if err != nil {
 		t.Fatalf("Unable to generate private key: ", err)
 	}
 
 	// Encrypt the integer 15.
 	m15 := new(big.Int).SetInt64(15)
-	c15, err := Encrypt(&privKey.PublicKey, m15.Bytes())
+	c15, err := paillier.Encrypt(&privKey.PublicKey, m15.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
@@ -352,8 +353,8 @@ func TestHomomorphicConstantAddition(t *testing.T) {
 	// Attempt to add the plaintext constant "10" to our encrypted integer
 	// "15".
 	ten := new(big.Int).SetInt64(10)
-	encryptedAdd := Add(&privKey.PublicKey, c15, ten.Bytes())
-	plainText, err := Decrypt(privKey, encryptedAdd)
+	encryptedAdd := paillier.Add(&privKey.PublicKey, c15, ten.Bytes())
+	plainText, err := paillier.Decrypt(privKey, encryptedAdd)
 	if err != nil {
 		t.Fatalf("Unable to decrypt cipher text: ", err)
 	}
@@ -369,22 +370,22 @@ func TestHomomorphicConstantAddition(t *testing.T) {
 
 func TestHomomorphicConstantMultiplication(t *testing.T) {
 	// Generate a 128-bit private key.
-	privKey, err := GenerateKey(rand.Reader, 128)
+	privKey, err := paillier.GenerateKey(rand.Reader, 128)
 	if err != nil {
 		t.Fatalf("Unable to generate private key: ", err)
 	}
 
 	// Encrypt the integer 15.
 	m15 := new(big.Int).SetInt64(15)
-	c15, err := Encrypt(&privKey.PublicKey, m15.Bytes())
+	c15, err := paillier.Encrypt(&privKey.PublicKey, m15.Bytes())
 	if err != nil {
 		t.Fatalf("Unable to encrypt plain text: ", err)
 	}
 
 	// Attempt to multiply our encrypted integer
 	ten := new(big.Int).SetInt64(10)
-	encryptedAdd := Mul(&privKey.PublicKey, c15, ten.Bytes())
-	plainText, err := Decrypt(privKey, encryptedAdd)
+	encryptedAdd := paillier.Mul(&privKey.PublicKey, c15, ten.Bytes())
+	plainText, err := paillier.Decrypt(privKey, encryptedAdd)
 	if err != nil {
 		t.Fatalf("Unable to decrypt cipher text: ", err)
 	}
