@@ -1,7 +1,8 @@
-package paillier
+package paillier_test
 
 import (
 	"crypto/rand"
+	"github.com/mcornejo/go-go-gadget-paillier"
 	"math/big"
 	"testing"
 )
@@ -228,6 +229,11 @@ func BenchmarkDecryptionLarge1024(b *testing.B) { benchmarkDecryptionLarge(param
 func BenchmarkDecryptionLarge2048(b *testing.B) { benchmarkDecryptionLarge(params2048, b) }
 func BenchmarkDecryptionLarge3072(b *testing.B) { benchmarkDecryptionLarge(params3072, b) }
 func BenchmarkDecryptionLarge4096(b *testing.B) { benchmarkDecryptionLarge(params4096, b) }
+
+func BenchmarkAdditionLarge1024(b *testing.B) { Addition(params1024, b) }
+func BenchmarkAdditionLarge2048(b *testing.B) { Addition(params2048, b) }
+func BenchmarkAdditionLarge3072(b *testing.B) { Addition(params3072, b) }
+func BenchmarkAdditionLarge4096(b *testing.B) { Addition(params4096, b) }
 
 func TestPrintParams(t *testing.T) {
 

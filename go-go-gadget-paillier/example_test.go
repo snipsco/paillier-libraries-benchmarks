@@ -1,7 +1,8 @@
-package paillier
+package paillier_test
 
 import (
 	"crypto/rand"
+	"github.com/mcornejo/go-go-gadget-paillier"
 	"fmt"
 	"math/big"
 )
