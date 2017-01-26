@@ -31,7 +31,7 @@ cd ..
 
 Building the bench:
 ```
-gcc -O3 bench.c libpaillier/paillier.o -Ilibpaillier -lgmp -o bench
+gcc -O3 bench.c libpaillier/paillier.o -Ilibpaillier -lgmp -o bench -std=gnu11
 ```
 
 Running the bench
