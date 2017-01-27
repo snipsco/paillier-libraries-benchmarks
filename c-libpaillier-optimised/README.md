@@ -1,6 +1,6 @@
 # libpaillier
 
-This is the bench of [libpaillier](http://acsc.cs.utexas.edu/libpaillier/) written in C.
+This is the bench of [libpaillier](http://acsc.cs.utexas.edu/libpaillier/) written in C, with optimised encryption.
 
 ## Prerequisites
 
@@ -11,14 +11,16 @@ Requires GMP to be installed.
 
 Run the following to build the libpaillier library:
 ```
-cd libpaillier-0.8
+git clone https://github.com/mortendahl/libpaillier.git
+cd libpaillier
 ./configure
 make
 cd ..
 ```
 which on AWS must be done with the path to GMP explicitly specified:
 ```
-cd libpaillier-0.8
+git clone https://github.com/mortendahl/libpaillier.git
+cd libpaillier
 ./configure --with-gmp-include=/usr/include/x86_64-linux-gnu/ --with-gmp-lib=/usr/lib/x86_64-linux-gnu/
 make
 cd ..
@@ -29,7 +31,7 @@ cd ..
 
 Building the bench:
 ```
-gcc -O3 bench.c libpaillier-0.8/paillier.o -Ilibpaillier-0.8 -lgmp -o bench -std=gnu11
+gcc -O3 bench.c libpaillier/paillier.o -Ilibpaillier -lgmp -o bench -std=gnu11
 ```
 
 Running the bench
