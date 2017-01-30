@@ -5,12 +5,18 @@ extern crate paillier;
 use bencher::Bencher;
 use paillier::*;
 
-pub fn encryption<KS, PT>(b: &mut Bencher)
+mod constants;
+use constants::*;
+
+pub fn encryption<KS, EK, PT>(b: &mut Bencher)
 where
     KS: KeySize,
-    PT: Plaintext
+    PT: Plaintext,
+    for<'kp> EK: From<&'kp Keypair<BigInteger>>,
+    Paillier: Encryption<EK, core::Plaintext<BigInteger>, core::Ciphertext<BigInteger>>,
 {
-    let (ek, _) = Paillier::keypair_with_modulus_size(KS::get());
+    let keypair = Paillier::keypair_with_modulus_size(KS::get());
+    let ek = EK::from(&keypair);
     let m = core::Plaintext(PT::get());
 
     b.iter(|| {
@@ -18,31 +24,32 @@ where
     });
 }
 
-static SMALL: &'static str = "42";
-static LARGE: &'static str = "9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729";
+benchmark_group!(generic,
+    encryption<KeySize1024, GenericEncryption, PlaintextSmall>,
+    encryption<KeySize1024, GenericEncryption, PlaintextLarge>,
 
-pub trait KeySize { fn get() -> usize; }
-struct KeySize1024; impl KeySize for KeySize1024 { fn get() -> usize { 1024 } }
-struct KeySize2048; impl KeySize for KeySize2048 { fn get() -> usize { 2048 } }
-struct KeySize3072; impl KeySize for KeySize3072 { fn get() -> usize { 3072 } }
-struct KeySize4096; impl KeySize for KeySize4096 { fn get() -> usize { 4096 } }
+    encryption<KeySize2048, GenericEncryption, PlaintextSmall>,
+    encryption<KeySize2048, GenericEncryption, PlaintextLarge>,
 
-pub trait Plaintext { fn get() -> BigInteger; }
-struct PlaintextSmall; impl Plaintext for PlaintextSmall { fn get() -> BigInteger { str::parse(SMALL).unwrap() } }
-struct PlaintextLarge; impl Plaintext for PlaintextLarge { fn get() -> BigInteger { str::parse(LARGE).unwrap() } }
+    encryption<KeySize3072, GenericEncryption, PlaintextSmall>,
+    encryption<KeySize3072, GenericEncryption, PlaintextLarge>,
 
-benchmark_group!(small,
-    encryption<KeySize1024, PlaintextSmall>,
-    encryption<KeySize2048, PlaintextSmall>,
-    encryption<KeySize3072, PlaintextSmall>,
-    encryption<KeySize4096, PlaintextSmall>
+    encryption<KeySize4096, GenericEncryption, PlaintextSmall>,
+    encryption<KeySize4096, GenericEncryption, PlaintextLarge>
 );
 
-benchmark_group!(large,
-    encryption<KeySize1024, PlaintextLarge>,
-    encryption<KeySize2048, PlaintextLarge>,
-    encryption<KeySize3072, PlaintextLarge>,
-    encryption<KeySize4096, PlaintextLarge>
+benchmark_group!(standard,
+    encryption<KeySize1024, StandardEncryption, PlaintextSmall>,
+    encryption<KeySize1024, StandardEncryption, PlaintextLarge>,
+
+    encryption<KeySize2048, StandardEncryption, PlaintextSmall>,
+    encryption<KeySize2048, StandardEncryption, PlaintextLarge>,
+
+    encryption<KeySize3072, StandardEncryption, PlaintextSmall>,
+    encryption<KeySize3072, StandardEncryption, PlaintextLarge>,
+
+    encryption<KeySize4096, StandardEncryption, PlaintextSmall>,
+    encryption<KeySize4096, StandardEncryption, PlaintextLarge>
 );
 
-benchmark_main!(small, large);
+benchmark_main!(standard, generic);

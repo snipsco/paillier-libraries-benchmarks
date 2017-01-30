@@ -5,12 +5,19 @@ extern crate paillier;
 use bencher::Bencher;
 use paillier::*;
 
-pub fn decryption<KS, PT>(b: &mut Bencher)
+mod constants;
+use constants::*;
+
+pub fn decryption<KS, DK, PT>(b: &mut Bencher)
 where
     KS: KeySize,
-    PT: Plaintext
+    PT: Plaintext,
+    for<'kp> DK: From<&'kp Keypair<BigInteger>>,
+    Paillier: Decryption<DK, core::Ciphertext<BigInteger>, core::Plaintext<BigInteger>>,
 {
-    let (ek, dk) = Paillier::keypair_with_modulus_size(KS::get());
+    let keypair = Paillier::keypair_with_modulus_size(KS::get());
+    let ek = StandardEncryption::from(&keypair);
+    let dk = DK::from(&keypair);
     let m = core::Plaintext(PT::get());
     let c = Paillier::encrypt(&ek, &m);
 
@@ -19,31 +26,32 @@ where
     });
 }
 
-static SMALL: &'static str = "42";
-static LARGE: &'static str = "9601375721773960030826048348718350956180868954786249183055522621772391594913965263068361191091587324151101807311169301869981191762119859865346892157945421998951222949069729370836921713919282283633399891943869137940899827469813950721928452427835958620445001112962904065293585229146038515621140909326729";
+benchmark_group!(standard,
+    decryption<KeySize1024, StandardDecryption, PlaintextSmall>,
+    decryption<KeySize1024, StandardDecryption, PlaintextLarge>,
 
-pub trait KeySize { fn get() -> usize; }
-struct KeySize1024; impl KeySize for KeySize1024 { fn get() -> usize { 1024 } }
-struct KeySize2048; impl KeySize for KeySize2048 { fn get() -> usize { 2048 } }
-struct KeySize3072; impl KeySize for KeySize3072 { fn get() -> usize { 3072 } }
-struct KeySize4096; impl KeySize for KeySize4096 { fn get() -> usize { 4096 } }
+    decryption<KeySize2048, StandardDecryption, PlaintextSmall>,
+    decryption<KeySize2048, StandardDecryption, PlaintextLarge>,
 
-pub trait Plaintext { fn get() -> BigInteger; }
-struct PlaintextSmall; impl Plaintext for PlaintextSmall { fn get() -> BigInteger { str::parse(SMALL).unwrap() } }
-struct PlaintextLarge; impl Plaintext for PlaintextLarge { fn get() -> BigInteger { str::parse(LARGE).unwrap() } }
+    decryption<KeySize3072, StandardDecryption, PlaintextSmall>,
+    decryption<KeySize3072, StandardDecryption, PlaintextLarge>,
 
-benchmark_group!(small,
-    decryption<KeySize1024, PlaintextSmall>,
-    decryption<KeySize2048, PlaintextSmall>,
-    decryption<KeySize3072, PlaintextSmall>,
-    decryption<KeySize4096, PlaintextSmall>
+    decryption<KeySize4096, StandardDecryption, PlaintextSmall>,
+    decryption<KeySize4096, StandardDecryption, PlaintextLarge>
 );
 
-benchmark_group!(large,
-    decryption<KeySize1024, PlaintextLarge>,
-    decryption<KeySize2048, PlaintextLarge>,
-    decryption<KeySize3072, PlaintextLarge>,
-    decryption<KeySize4096, PlaintextLarge>
+benchmark_group!(crt,
+    decryption<KeySize1024, CrtDecryption, PlaintextSmall>,
+    decryption<KeySize1024, CrtDecryption, PlaintextLarge>,
+
+    decryption<KeySize2048, CrtDecryption, PlaintextSmall>,
+    decryption<KeySize2048, CrtDecryption, PlaintextLarge>,
+
+    decryption<KeySize3072, CrtDecryption, PlaintextSmall>,
+    decryption<KeySize3072, CrtDecryption, PlaintextLarge>,
+
+    decryption<KeySize4096, CrtDecryption, PlaintextSmall>,
+    decryption<KeySize4096, CrtDecryption, PlaintextLarge>
 );
 
-benchmark_main!(small, large);
+benchmark_main!(standard, crt);
