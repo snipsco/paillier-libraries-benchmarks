@@ -249,7 +249,7 @@ void run_multiplication_tests(){
 
 int main(int argc, char **argv){
    
-    //run_keygen_tests();
+    run_keygen_tests();
     run_encryption_small_tests();
     run_encryption_large_tests();
     run_decryption_small_tests();
