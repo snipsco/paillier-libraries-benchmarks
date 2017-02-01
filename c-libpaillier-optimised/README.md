@@ -11,7 +11,7 @@ Requires GMP to be installed.
 
 Run the following to build the libpaillier library:
 ```
-git clone https://github.com/mortendahl/libpaillier.git
+git clone https://github.com/mcornejo/libpaillier.git
 cd libpaillier
 ./configure
 make
@@ -19,7 +19,7 @@ cd ..
 ```
 which on AWS must be done with the path to GMP explicitly specified:
 ```
-git clone https://github.com/mortendahl/libpaillier.git
+git clone https://github.com/mcornejo/libpaillier.git
 cd libpaillier
 ./configure --with-gmp-include=/usr/include/x86_64-linux-gnu/ --with-gmp-lib=/usr/lib/x86_64-linux-gnu/
 make
