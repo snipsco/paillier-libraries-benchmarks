@@ -16,7 +16,7 @@ cd libpaillier-0.8
 make
 cd ..
 ```
-which on AWS must be done with the path to GMP explicitly specified:
+which on Google GCE must be done with the path to GMP explicitly specified:
 ```
 cd libpaillier-0.8
 ./configure --with-gmp-include=/usr/include/x86_64-linux-gnu/ --with-gmp-lib=/usr/lib/x86_64-linux-gnu/
