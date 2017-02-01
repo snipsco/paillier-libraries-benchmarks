@@ -4,4 +4,4 @@ Benchmarks of libraries implementing Paillier encryption in various languages as
 
 All code has been tested on macOS and Google GCE (Ubuntu), some also on Raspberry Pis and mobile phones.
 
-Each subdirectory contains notes regarding specific installation and running. [Setup instructions for a blank Google GCE instance](README-GCE.md) are also available.
+Each subdirectory contains notes regarding specific installation and running. [Setup instructions for a blank Google GCE instance](README-GCE.md) and [Running Rust+Ramp test on phones](README-Dinghy.md) are also available.
